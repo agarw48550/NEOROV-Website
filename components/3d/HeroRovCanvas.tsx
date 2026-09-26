@@ -45,7 +45,7 @@ export function HeroRovCanvas() {
       >
         <Suspense fallback={null}>
           <UnderwaterLights />
-          <Environment preset="city" environmentIntensity={0.35} />
+          <Environment preset="city" environmentIntensity={0.75} />
           {reduced ? (
             <RovModel pointer={undefined} bob={false} />
           ) : (

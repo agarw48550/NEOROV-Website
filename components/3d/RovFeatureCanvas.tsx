@@ -61,7 +61,7 @@ export function RovFeatureCanvas({
       >
         <Suspense fallback={null}>
           <UnderwaterLights />
-          <Environment preset="warehouse" environmentIntensity={0.3} />
+          <Environment preset="warehouse" environmentIntensity={0.7} />
           <FeatureCamera features={features} activeIndex={activeIndex} />
           <RovModel pointer={pointer} lookStrength={0.2} bob />
           <ContactShadows
