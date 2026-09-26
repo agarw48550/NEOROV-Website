@@ -1,33 +1,73 @@
+export const problemStatement = {
+  eyebrow: "The problem",
+  title: "You can’t protect what you can’t see",
+  body: "Singapore’s waters hold roughly 255 species of hard coral — nearly a third of the world’s total — packed into a tiny area. Since 1953, more than 60% of that cover has been lost. Visibility often drops to less than an arm’s length, and divers alone can’t keep pace with the reefs that remain.",
+};
+
+export const dualPaths = [
+  {
+    id: "vehicle",
+    eyebrow: "The vehicle",
+    title: "Explore the ROV",
+    body: "An open-frame research tool: live video, depth and temperature logging, deployable from shore.",
+    href: "/rov",
+    cta: "Inspect the systems",
+  },
+  {
+    id: "crew",
+    eyebrow: "The crew",
+    title: "Meet the four",
+    body: "Built for the water by a four-person team at UWCSEA East — engineering meets ocean science.",
+    href: "/team",
+    cta: "Meet the team",
+  },
+] as const;
+
+export const capabilityPillars = [
+  {
+    word: "SEE",
+    body: "Live 1080p video through murky coastal water — the first step to protecting a reef you can’t walk on.",
+  },
+  {
+    word: "MEASURE",
+    body: "Depth, pressure, and temperature logged with every transect so abiotic context travels with the footage.",
+  },
+  {
+    word: "REACH",
+    body: "Shore- or boat-deployable at ~5.9 kg and about $1,500 — research access without a support vessel.",
+  },
+] as const;
+
+export const filmstripPhotos = [
+  "/images/rov/underwater-action.jpg",
+  "/images/rov/gopro-poolside.jpg",
+  "/images/rov/gopro-deploy.jpg",
+  "/images/rov/onboard-electronics.jpg",
+  "/images/rov/poolside-rov-web.jpg",
+  "/images/rov/gopro-surface.jpg",
+  "/images/rov/underwater-rov.jpg",
+  "/images/rov/onboard-wiring.jpg",
+  "/images/rov/gopro-hull.jpg",
+  "/images/rov/team-field.jpg",
+  "/images/rov/gopro-waterline.jpg",
+  "/images/rov/onboard-capsule.jpg",
+];
+
+/** Two scroll story beats — crisis → solution */
 export const reefStoryBeats = [
   {
     id: "crisis",
-    eyebrow: "The problem",
-    title: "You can’t protect what you can’t see",
-    body: "Singapore’s waters hold roughly 255 species of hard coral — nearly a third of the world’s total — packed into a tiny area. Since 1953, more than 60% of that cover has been lost. Decades of reclamation have disrupted growth and cut visibility to less than an arm’s length.",
+    eyebrow: "Heat & loss",
+    title: "Reefs are living cities under pressure",
+    body: "Warm the sea by 1.5–2 °C and polyps expel their algae — bleaching. Over 84% of the world’s reefs face heat stress. Reefs cover under 1% of the ocean floor yet support about 1 in 4 marine species.",
     visual: "crisis" as const,
     image: "/images/rov/hantu-reef.jpg",
-  },
-  {
-    id: "bleaching",
-    eyebrow: "Heat stress",
-    title: "Reefs are living cities under pressure",
-    body: "Coral is a calcium skeleton with polyps and symbiotic algae that feed and colour the colony. Warm the sea by 1.5–2 °C and the polyps expel the algae — bleaching. Without algae, coral starves. Over 84% of the world’s reefs face heat stress; reefs cover under 1% of the ocean floor yet support about 1 in 4 marine species.",
-    visual: "bleaching" as const,
-    image: "/images/rov/tioman-reef.jpg",
-  },
-  {
-    id: "gap",
-    eyebrow: "The survey gap",
-    title: "Divers alone can’t keep pace",
-    body: "Traditional surveys send trained divers along fixed routes with tape and slate. They’re accurate — and limited by air, depth, decompression, currents, and personal risk. Their presence also disturbs the fauna being studied. Commercial research ROVs cost tens of thousands and need support vessels; consumer drones can’t carry science instruments.",
-    visual: "gap" as const,
-    image: "/images/rov/onboard-view.jpg",
   },
   {
     id: "solution",
     eyebrow: "Our answer",
     title: "A research tool you can carry to the shore",
-    body: "Reef Monitoring ROV is a low-cost, open-architecture vehicle: live 1080p video, depth, temperature and pH logging, ~5.9 kg, about $1,500, deployable from shore or a small boat. Field-proven at Pulau Hantu and Pulau Tioman — max depth 11.04 m, over 10,000 logged samples — built to help map and monitor reefs that are hard to see any other way.",
+    body: "Reef Monitoring ROV: live 1080p, depth and temperature logging, field-proven at Pulau Hantu and Pulau Tioman — max depth 11.04 m, over 10,000 logged samples.",
     visual: "solution" as const,
     image: "/images/rov/underwater-action.jpg",
   },
