@@ -52,14 +52,15 @@ export default function TeamPage() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.55, delay: i * 0.08 }}
               className="group relative"
+              style={{ perspective: 900 }}
             >
-              <div className="relative aspect-[3/4] overflow-hidden bg-[#0a1520]">
+              <div className="relative aspect-[3/4] overflow-hidden bg-[#0a1520] transition duration-500 group-hover:[transform:rotateY(-4deg)_rotateX(2deg)]">
                 <Image
                   src={member.image}
                   alt={member.name}
                   fill
                   priority={i < 2}
-                  className="object-cover object-top transition duration-700 group-hover:scale-[1.03]"
+                  className="object-cover object-top transition duration-700 group-hover:scale-[1.04]"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#030d14] via-[#030d14]/20 to-transparent" />

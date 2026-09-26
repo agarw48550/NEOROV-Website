@@ -40,17 +40,86 @@ export const capabilityPillars = [
 
 export const filmstripPhotos = [
   "/images/rov/underwater-action.jpg",
+  "/images/field/hantu-01.jpg",
   "/images/rov/gopro-poolside.jpg",
+  "/images/field/tioman-03.jpg",
   "/images/rov/gopro-deploy.jpg",
+  "/images/exhibition/exhibit-demo-01.jpg",
   "/images/rov/onboard-electronics.jpg",
+  "/images/field/workshop-03.jpg",
   "/images/rov/poolside-rov-web.jpg",
+  "/images/field/tioman-07.jpg",
   "/images/rov/gopro-surface.jpg",
+  "/images/field/hantu-03.jpg",
   "/images/rov/underwater-rov.jpg",
+  "/images/exhibition/exhibit-booth-01.jpg",
   "/images/rov/onboard-wiring.jpg",
+  "/images/field/phone-03.jpg",
   "/images/rov/gopro-hull.jpg",
+  "/images/field/workshop-01.jpg",
   "/images/rov/team-field.jpg",
+  "/images/field/tioman-05.jpg",
   "/images/rov/gopro-waterline.jpg",
+  "/images/exhibition/exhibit-02.jpg",
   "/images/rov/onboard-capsule.jpg",
+  "/images/field/hantu-05.jpg",
+];
+
+export const fieldVideos = [
+  {
+    src: "/media/field-hantu.mp4",
+    label: "Pulau Hantu transect",
+    poster: "/images/field/hantu-02.jpg",
+  },
+  {
+    src: "/media/field-tioman-surface.mp4",
+    label: "Tioman surface ops",
+    poster: "/images/field/tioman-01.jpg",
+  },
+  {
+    src: "/media/field-hantu-deploy.mp4",
+    label: "Shore deploy",
+    poster: "/images/rov/gopro-deploy.jpg",
+  },
+  {
+    src: "/media/workshop-pool.mp4",
+    label: "Pool trials",
+    poster: "/images/rov/poolside-rov-web.jpg",
+  },
+  {
+    src: "/media/field-tioman-boat.mp4",
+    label: "Boat staging",
+    poster: "/images/field/tioman-08.jpg",
+  },
+  {
+    src: "/media/workshop-build.mp4",
+    label: "Bench build",
+    poster: "/images/field/workshop-04.jpg",
+  },
+] as const;
+
+export const exhibitionPhotos = [
+  "/images/exhibition/exhibit-01.jpg",
+  "/images/exhibition/exhibit-02.jpg",
+  "/images/exhibition/exhibit-booth-01.jpg",
+  "/images/exhibition/exhibit-demo-01.jpg",
+  "/images/exhibition/exhibit-crowd-01.jpg",
+  "/images/exhibition/exhibit-demo-02.jpg",
+  "/images/exhibition/exhibit-setup-01.jpg",
+  "/images/exhibition/exhibit-poster-01.jpg",
+] as const;
+
+export const mosaicPhotos = [
+  { src: "/images/field/tioman-02.jpg", span: "tall" as const },
+  { src: "/images/field/workshop-07.jpg", span: "wide" as const },
+  { src: "/images/field/hantu-04.jpg", span: "square" as const },
+  { src: "/images/field/phone-01.jpg", span: "square" as const },
+  { src: "/images/field/telemetry-01.png", span: "wide" as const },
+  { src: "/images/field/workshop-02.jpg", span: "tall" as const },
+  { src: "/images/field/tioman-06.jpg", span: "square" as const },
+  { src: "/images/exhibition/exhibit-04.jpg", span: "square" as const },
+  { src: "/images/field/phone-07.jpg", span: "wide" as const },
+  { src: "/images/field/telemetry-03.png", span: "square" as const },
 ];
 
 /** Two scroll story beats — crisis → solution */

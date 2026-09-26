@@ -9,13 +9,19 @@ import {
   animate,
 } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ReefStoryCanvas } from "@/components/3d/DynamicCanvases";
+import { InlineVideo } from "@/components/media/InlineVideo";
+import { CursorGlow, usePointerParallax } from "@/components/motion/CursorGlow";
+import { MagneticLink } from "@/components/motion/MagneticLink";
+import { TiltMedia } from "@/components/motion/TiltMedia";
 import {
   capabilityPillars,
   dualPaths,
+  exhibitionPhotos,
+  fieldVideos,
   filmstripPhotos,
+  mosaicPhotos,
   problemStatement,
   reefStoryBeats,
 } from "@/content/home";
@@ -23,6 +29,7 @@ import {
 function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [ready, setReady] = useState(false);
+  const { x, y } = usePointerParallax(12);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -41,43 +48,48 @@ function HeroVideo() {
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-[#041018]">
-      <Image
-        src="/media/hero-poster.jpg"
-        alt=""
-        fill
-        priority
-        className={`object-cover transition-opacity duration-700 ${
-          ready ? "opacity-0" : "opacity-100"
-        }`}
-        sizes="100vw"
-      />
-      <video
-        ref={videoRef}
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-          ready ? "opacity-100" : "opacity-0"
-        }`}
-        autoPlay
-        muted
-        loop
-        playsInline
-        poster="/media/hero-poster.jpg"
-        preload="auto"
+      <motion.div
+        style={{ x, y, scale: 1.08 }}
+        className="absolute inset-[-4%] will-change-transform"
       >
-        <source src="/media/hero-highlight.mp4" type="video/mp4" />
-      </video>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#041018] via-[#041018]/50 to-[#041018]/20" />
+        <Image
+          src="/media/hero-poster.jpg"
+          alt=""
+          fill
+          priority
+          className={`object-cover object-center transition-opacity duration-700 ${
+            ready ? "opacity-0" : "opacity-100"
+          }`}
+          sizes="100vw"
+        />
+        <video
+          ref={videoRef}
+          className={`absolute inset-0 h-full w-full object-cover object-[center_40%] transition-opacity duration-700 sm:object-center ${
+            ready ? "opacity-100" : "opacity-0"
+          }`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/media/hero-poster.jpg"
+          preload="auto"
+        >
+          <source src="/media/hero-highlight.mp4" type="video/mp4" />
+        </video>
+      </motion.div>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#041018] via-[#041018]/55 to-[#041018]/25" />
       <div className="pointer-events-none absolute inset-0 caustics opacity-30 mix-blend-screen" />
+      <div className="pointer-events-none absolute inset-0 sonar-rings opacity-40" />
     </div>
   );
 }
 
 function PhotoFilmstrip() {
   const x = useMotionValue(0);
-  const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const controls = animate(x, -1200, {
-      duration: 48,
+    const controls = animate(x, -1800, {
+      duration: 56,
       ease: "linear",
       repeat: Infinity,
       repeatType: "loop",
@@ -107,23 +119,187 @@ function PhotoFilmstrip() {
           From the pool to the reef
         </motion.h2>
       </div>
-      <div ref={trackRef} className="relative">
+      <div className="relative">
         <motion.div style={{ x }} className="flex w-max gap-3 px-5 md:gap-4 md:px-10">
           {photos.map((src, i) => (
             <div
               key={`${src}-${i}`}
-              className="relative h-44 w-64 shrink-0 overflow-hidden md:h-56 md:w-80"
+              className="relative h-40 w-56 shrink-0 overflow-hidden sm:h-44 sm:w-64 md:h-56 md:w-80"
             >
               <Image
                 src={src}
                 alt="ROV in the field"
                 fill
                 className="object-cover"
-                sizes="320px"
+                sizes="(max-width: 640px) 224px, 320px"
               />
             </div>
           ))}
         </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function FieldVideoStrip() {
+  return (
+    <section className="relative px-5 py-20 md:px-10 md:py-28">
+      <div className="pointer-events-none absolute inset-0 depth-gradient opacity-70" />
+      <div className="relative mx-auto max-w-6xl">
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-xs tracking-[0.28em] uppercase text-secondary"
+        >
+          Field footage
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="font-display mt-3 text-3xl text-foreground md:text-4xl"
+        >
+          Missions in motion
+        </motion.h2>
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {fieldVideos.map((clip, i) => (
+            <motion.div
+              key={clip.src}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.55, delay: (i % 3) * 0.08 }}
+            >
+              <TiltMedia className="overflow-hidden">
+                <div className="relative aspect-video w-full bg-[#061018]">
+                  <InlineVideo
+                    src={clip.src}
+                    poster={clip.poster}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#041018]/90 to-transparent px-3 pb-3 pt-10">
+                    <p className="text-[10px] tracking-[0.22em] uppercase text-secondary">
+                      {clip.label}
+                    </p>
+                  </div>
+                </div>
+              </TiltMedia>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PhotoMosaic() {
+  return (
+    <section className="relative px-5 py-16 md:px-10 md:py-24">
+      <div className="mx-auto max-w-6xl">
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-xs tracking-[0.28em] uppercase text-secondary"
+        >
+          Workshop · reef · telemetry
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="font-display mt-3 max-w-xl text-3xl text-foreground md:text-4xl"
+        >
+          Built, tested, and logged
+        </motion.h2>
+        <div className="mt-10 grid auto-rows-[140px] grid-cols-2 gap-2 sm:auto-rows-[160px] sm:gap-3 md:auto-rows-[180px] md:grid-cols-4 lg:auto-rows-[200px]">
+          {mosaicPhotos.map((item, i) => {
+            const span =
+              item.span === "tall"
+                ? "row-span-2"
+                : item.span === "wide"
+                  ? "col-span-2"
+                  : "";
+            return (
+              <motion.div
+                key={`${item.src}-${i}`}
+                initial={{ opacity: 0, scale: 0.96 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: (i % 5) * 0.05 }}
+                className={`relative overflow-hidden ${span}`}
+              >
+                <TiltMedia className="h-full w-full" maxTilt={6}>
+                  <div className="relative h-full min-h-[140px] w-full">
+                    <Image
+                      src={item.src}
+                      alt="ROV field and workshop photography"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 50vw, 25vw"
+                    />
+                  </div>
+                </TiltMedia>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ExhibitionStrip() {
+  return (
+    <section className="relative overflow-hidden border-y border-white/5 py-16 md:py-24">
+      <div className="absolute inset-0">
+        <Image
+          src="/images/exhibition/exhibit-crowd-01.jpg"
+          alt=""
+          fill
+          className="object-cover opacity-25"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-[#041018]/85" />
+      </div>
+      <div className="relative mx-auto max-w-6xl px-5 md:px-10">
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-xs tracking-[0.28em] uppercase text-secondary"
+        >
+          On display
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="font-display mt-3 text-3xl text-foreground md:text-4xl"
+        >
+          Exhibition moments
+        </motion.h2>
+        <div className="mt-10 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {exhibitionPhotos.map((src, i) => (
+            <motion.div
+              key={src}
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05 }}
+              className="relative aspect-[4/3] w-[72vw] max-w-sm shrink-0 snap-center overflow-hidden sm:w-72 md:w-80"
+            >
+              <Image
+                src={src}
+                alt="Exhibition of the Reef Monitoring ROV"
+                fill
+                className="object-cover"
+                sizes="320px"
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -167,10 +343,10 @@ function StoryBeatPanel({
   return (
     <section
       ref={ref}
-      className="relative h-[130svh] min-h-[720px]"
+      className="relative h-[120svh] min-h-[560px] sm:min-h-[640px] md:h-[130svh] md:min-h-[720px]"
       aria-label={beat.title}
     >
-      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
+      <div className="sticky top-0 flex h-[100svh] max-h-[100dvh] items-center overflow-hidden">
         <div className="absolute inset-0">
           {showCanvas && inView ? (
             <ReefStoryCanvas progress={0.55 + index * 0.2} />
@@ -180,12 +356,12 @@ function StoryBeatPanel({
                 src={beat.image}
                 alt=""
                 fill
-                className="object-cover"
+                className="object-cover object-center"
                 sizes="100vw"
               />
             </motion.div>
           )}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#041018]/92 via-[#041018]/45 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#041018]/95 via-[#041018]/55 to-transparent md:via-[#041018]/45" />
           {beat.visual === "crisis" && (
             <div className="pointer-events-none absolute inset-0 opacity-40 mist-drift" />
           )}
@@ -193,7 +369,7 @@ function StoryBeatPanel({
 
         <motion.div
           style={{ opacity, y }}
-          className="relative z-10 w-full px-5 md:px-10"
+          className="relative z-10 w-full px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:px-10"
         >
           <div className="mx-auto max-w-6xl">
             <article className="max-w-xl">
@@ -215,18 +391,33 @@ function StoryBeatPanel({
   );
 }
 
+function FloatingAccents() {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none fixed inset-0 z-[2] overflow-hidden"
+    >
+      <div className="depth-line absolute left-[8%] top-[20%] hidden h-32 w-px opacity-30 lg:block" />
+      <div className="depth-line absolute right-[12%] top-[55%] hidden h-24 w-px opacity-20 lg:block" />
+      <div className="float-orb absolute -left-16 top-[40%] h-40 w-40 rounded-full opacity-20" />
+      <div className="float-orb float-orb-delayed absolute -right-10 top-[70%] h-28 w-28 rounded-full opacity-15" />
+    </div>
+  );
+}
+
 export function HomeExperience() {
   return (
-    <>
-      <section className="relative h-[100svh] min-h-[640px] overflow-hidden">
+    <CursorGlow>
+      <FloatingAccents />
+      <section className="relative h-[100svh] min-h-[520px] overflow-hidden supports-[height:100dvh]:h-[100dvh] sm:min-h-[640px]">
         <HeroVideo />
-        <div className="relative z-10 flex h-full flex-col justify-end px-5 pb-16 pt-28 md:px-10 md:pb-20">
+        <div className="relative z-10 flex h-full flex-col justify-end px-5 pb-[max(4rem,env(safe-area-inset-bottom))] pt-28 md:px-10 md:pb-20">
           <div className="mx-auto w-full max-w-6xl">
             <motion.h1
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.15 }}
-              className="font-display max-w-4xl text-5xl leading-[0.95] tracking-tight text-foreground md:text-7xl lg:text-8xl"
+              className="font-display max-w-4xl text-[clamp(2.5rem,8vw,5.5rem)] leading-[0.95] tracking-tight text-foreground"
             >
               Reef Monitoring ROV
             </motion.h1>
@@ -244,18 +435,18 @@ export function HomeExperience() {
               transition={{ duration: 0.7, delay: 0.5 }}
               className="mt-8 flex flex-wrap gap-4"
             >
-              <Link
+              <MagneticLink
                 href="/rov"
                 className="bg-secondary px-6 py-3 text-sm text-[#041018] transition hover:brightness-110"
               >
                 Explore the ROV
-              </Link>
-              <Link
+              </MagneticLink>
+              <MagneticLink
                 href="/team"
                 className="border border-foreground/25 px-6 py-3 text-sm text-foreground/90 transition hover:border-secondary hover:text-secondary"
               >
                 Meet the four
-              </Link>
+              </MagneticLink>
             </motion.div>
           </div>
         </div>
@@ -272,39 +463,58 @@ export function HomeExperience() {
         </motion.div>
       </section>
 
-      <section className="relative px-5 py-24 md:px-10 md:py-32">
+      <section className="relative px-5 py-20 md:px-10 md:py-32">
         <div className="pointer-events-none absolute inset-0 depth-gradient opacity-80" />
         <div className="relative mx-auto max-w-6xl">
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            className="text-xs tracking-[0.28em] uppercase text-secondary"
-          >
-            {problemStatement.eyebrow}
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.65 }}
-            className="font-display mt-4 max-w-3xl text-3xl leading-tight text-foreground md:text-5xl"
-          >
-            {problemStatement.title}
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.65, delay: 0.1 }}
-            className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/70 md:text-lg"
-          >
-            {problemStatement.body}
-          </motion.p>
+          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <motion.p
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                className="text-xs tracking-[0.28em] uppercase text-secondary"
+              >
+                {problemStatement.eyebrow}
+              </motion.p>
+              <motion.h2
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.65 }}
+                className="font-display mt-4 max-w-3xl text-3xl leading-tight text-foreground md:text-5xl"
+              >
+                {problemStatement.title}
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.65, delay: 0.1 }}
+                className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/70 md:text-lg"
+              >
+                {problemStatement.body}
+              </motion.p>
+            </div>
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              className="relative aspect-[4/5] overflow-hidden sm:aspect-video lg:aspect-[4/5]"
+            >
+              <Image
+                src="/images/field/hantu-02.jpg"
+                alt="Coastal reef habitat"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 40vw"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#041018]/50 to-transparent" />
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      <section className="px-5 pb-20 md:px-10 md:pb-28">
+      <section className="px-5 pb-16 md:px-10 md:pb-28">
         <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2 md:gap-16">
           {dualPaths.map((path, i) => (
             <motion.div
@@ -324,20 +534,22 @@ export function HomeExperience() {
               <p className="mt-4 max-w-md text-sm leading-relaxed text-foreground/65 md:text-base">
                 {path.body}
               </p>
-              <Link
+              <MagneticLink
                 href={path.href}
                 className="mt-6 inline-block text-sm text-secondary transition hover:brightness-125"
               >
                 {path.cta} →
-              </Link>
+              </MagneticLink>
             </motion.div>
           ))}
         </div>
       </section>
 
       <PhotoFilmstrip />
+      <FieldVideoStrip />
+      <PhotoMosaic />
 
-      <section className="px-5 py-24 md:px-10 md:py-32">
+      <section className="px-5 py-20 md:px-10 md:py-32">
         <div className="mx-auto max-w-6xl">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
@@ -377,8 +589,17 @@ export function HomeExperience() {
         />
       ))}
 
+      <ExhibitionStrip />
+
       <section className="relative overflow-hidden px-5 py-24 md:px-10 md:py-32">
         <div className="pointer-events-none absolute inset-0 depth-gradient" />
+        <div className="absolute inset-0 opacity-20">
+          <InlineVideo
+            src="/media/field-tioman-surface.mp4"
+            poster="/images/field/tioman-01.jpg"
+            className="h-full w-full object-cover"
+          />
+        </div>
         <div className="relative mx-auto max-w-6xl">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
@@ -402,21 +623,21 @@ export function HomeExperience() {
             viewport={{ once: true }}
             className="mt-10 flex flex-wrap gap-4"
           >
-            <Link
+            <MagneticLink
               href="/rov"
               className="bg-secondary px-6 py-3 text-sm text-[#041018] transition hover:brightness-110"
             >
               Vehicle features
-            </Link>
-            <Link
+            </MagneticLink>
+            <MagneticLink
               href="/blog/seeing-the-unseen"
               className="border border-foreground/25 px-6 py-3 text-sm text-foreground/90 transition hover:border-secondary"
             >
               Read Seeing the Unseen
-            </Link>
+            </MagneticLink>
           </motion.div>
         </div>
       </section>
-    </>
+    </CursorGlow>
   );
 }

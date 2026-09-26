@@ -28,14 +28,22 @@ export default function BlogPage() {
             href={`/blog/${seeingTheUnseen.slug}`}
             className="group relative block overflow-hidden border border-white/10"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,color-mix(in_srgb,var(--secondary)_25%,transparent),transparent_55%),linear-gradient(135deg,#0a1628,#12203a)]" />
+            <div className="absolute inset-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/field/tioman-04.jpg"
+                alt=""
+                className="h-full w-full object-cover opacity-35 transition duration-700 group-hover:scale-[1.04] group-hover:opacity-45"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(135deg,color-mix(in_srgb,#0a1628_88%,transparent),color-mix(in_srgb,#041018_70%,transparent))]" />
+            </div>
             <div className="pointer-events-none absolute inset-0 caustics opacity-40" />
             <div className="relative grid gap-8 px-6 py-14 md:grid-cols-[1.2fr_0.8fr] md:px-12 md:py-20">
               <div>
                 <p className="text-xs tracking-[0.22em] uppercase text-accent">
                   Featured · {seeingTheUnseen.category}
                 </p>
-                <h2 className="mt-4 text-3xl text-foreground transition group-hover:text-secondary md:text-5xl">
+                <h2 className="font-display mt-4 text-3xl text-foreground transition group-hover:text-secondary md:text-5xl">
                   {seeingTheUnseen.title}
                 </h2>
                 <p className="mt-4 max-w-xl text-sm leading-relaxed text-foreground/70 md:text-base">
