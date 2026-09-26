@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
-import { Carme } from "next/font/google";
+import { Fraunces, Outfit } from "next/font/google";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteNav } from "@/components/layout/SiteNav";
 import "./globals.css";
 
-const carme = Carme({
-  weight: "400",
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-carme",
+  variable: "--font-body",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -32,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={carme.variable}>
+    <html lang="en" className={`${outfit.variable} ${fraunces.variable}`}>
       <body className="min-h-screen antialiased font-sans">
         <SiteNav />
         <main>{children}</main>
