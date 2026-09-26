@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0f1729;
-  --foreground: #f8fafc;
-  --primary: #474c71;
-  --secondary: #07b6d5;
-  --accent: #0d968b;
+  --background: #041018;
+  --foreground: #f4fafc;
+  --primary: #2f6f7a;
+  --secondary: #2fd0e8;
+  --accent: #3ecf9a;
+  --coral: #e07a45;
   --muted: color-mix(in srgb, var(--foreground) 55%, transparent);
-  --surface: color-mix(in srgb, var(--primary) 35%, var(--background));
+  --surface: color-mix(in srgb, var(--primary) 28%, var(--background));
 }
 
 @theme inline {
@@ -18,7 +19,8 @@
   --color-accent: var(--accent);
   --color-muted: var(--muted);
   --color-surface: var(--surface);
-  --font-sans: var(--font-carme), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), ui-serif, Georgia, serif;
 }
 
 html {
@@ -32,6 +34,10 @@ body {
   overflow-x: hidden;
 }
 
+.font-display {
+  font-family: var(--font-display);
+}
+
 ::selection {
   background: color-mix(in srgb, var(--secondary) 40%, transparent);
   color: var(--foreground);
@@ -39,9 +45,9 @@ body {
 
 .depth-gradient {
   background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in srgb, var(--secondary) 22%, transparent), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 80% 60%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 50%),
-    linear-gradient(180deg, #0a1222 0%, var(--background) 40%, #07101c 100%);
+    radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in srgb, var(--secondary) 24%, transparent), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 80% 60%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 50%),
+    linear-gradient(180deg, #031018 0%, var(--background) 40%, #020c12 100%);
 }
 
 .caustics {
@@ -52,6 +58,17 @@ body {
   animation: caustic-drift 18s ease-in-out infinite alternate;
 }
 
+.mist-drift {
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(120, 180, 200, 0.18), transparent 50%),
+    radial-gradient(ellipse at 70% 60%, rgba(40, 80, 100, 0.35), transparent 45%);
+  animation: mist-move 14s ease-in-out infinite alternate;
+}
+
+.scroll-cue {
+  animation: cue-pulse 1.8s ease-in-out infinite;
+}
+
 @keyframes caustic-drift {
   from {
     transform: translate3d(-2%, -1%, 0) scale(1);
@@ -60,6 +77,27 @@ body {
   to {
     transform: translate3d(2%, 2%, 0) scale(1.05);
     opacity: 1;
+  }
+}
+
+@keyframes mist-move {
+  from {
+    transform: translate3d(-3%, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(3%, 2%, 0) scale(1.08);
+  }
+}
+
+@keyframes cue-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scaleY(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
   }
 }
 
@@ -74,6 +112,7 @@ body {
 }
 
 .prose-article h2 {
+  font-family: var(--font-display);
   font-size: 1.75rem;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
@@ -96,7 +135,16 @@ body {
     scroll-behavior: auto;
   }
   .caustics,
+  .mist-drift,
+  .scroll-cue,
   .animate-float {
     animation: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 }

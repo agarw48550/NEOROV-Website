@@ -14,7 +14,7 @@ export default function BlogPage() {
           <p className="text-xs tracking-[0.28em] uppercase text-secondary">
             Journal
           </p>
-          <h1 className="mt-3 text-4xl text-foreground md:text-6xl">Blog</h1>
+          <h1 className="font-display mt-3 text-4xl text-foreground md:text-6xl">Blog</h1>
           <p className="mt-4 max-w-xl text-foreground/65">
             Field notes, mission essays, and space for marine technology and
             Singapore ecology writing still to come.

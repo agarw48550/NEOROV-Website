@@ -36,7 +36,7 @@ export function SiteNav() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-8">
-        <Link href="/" className="text-sm tracking-[0.18em] uppercase text-foreground/90">
+        <Link href="/" className="font-display text-base tracking-tight text-foreground/95 md:text-lg">
           Reef Monitoring ROV
         </Link>
 

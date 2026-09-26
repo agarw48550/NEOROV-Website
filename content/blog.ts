@@ -57,6 +57,7 @@ export const blogCategories = [
   {
     id: "singapore-ecology",
     title: "Singapore’s Marine Ecology",
-    description: "Local reefs, Southern Islands habitats, and what monitoring still misses.",
+    description:
+      "Local reefs, Southern Islands habitats, and what monitoring still misses — making complex science accessible to every person.",
   },
 ] as const;
