@@ -11,19 +11,29 @@ export function RovPageClient() {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    sectionRefs.current.forEach((el, i) => {
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActive(i);
-        },
-        { rootMargin: "-40% 0px -40% 0px", threshold: 0 },
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return () => observers.forEach((o) => o.disconnect());
+    const onScroll = () => {
+      const mid = window.innerHeight * 0.45;
+      let best = 0;
+      let bestDist = Number.POSITIVE_INFINITY;
+      sectionRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const dist = Math.abs(center - mid);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
+      });
+      setActive(best);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return (
@@ -56,6 +66,7 @@ export function RovPageClient() {
           {rovFeatures.map((feature, i) => (
             <section
               key={feature.id}
+              id={`feature-${feature.id}`}
               ref={(el) => {
                 sectionRefs.current[i] = el;
               }}

@@ -149,6 +149,20 @@ function StoryBeatPanel({
   const scale = useTransform(smooth, [0.15, 0.45], [1.1, 1]);
 
   const showCanvas = beat.visual === "solution";
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !showCanvas) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setInView(true);
+      },
+      { rootMargin: "20% 0px" },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [showCanvas]);
 
   return (
     <section
@@ -158,7 +172,7 @@ function StoryBeatPanel({
     >
       <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
         <div className="absolute inset-0">
-          {showCanvas ? (
+          {showCanvas && inView ? (
             <ReefStoryCanvas progress={0.55 + index * 0.2} />
           ) : (
             <motion.div style={{ scale }} className="absolute inset-0">

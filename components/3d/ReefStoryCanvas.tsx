@@ -1,13 +1,14 @@
 "use client";
 
 import { Environment } from "@react-three/drei";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import type { Group } from "three";
 import { MathUtils, Vector3 } from "three";
 import { ReefModel } from "./ReefModel";
 import { RovModel } from "./RovModel";
 import { UnderwaterLights } from "./UnderwaterLights";
+import { WebGLCanvas } from "./WebGLCanvas";
 
 function ScrollDiveController({ progress }: { progress: number }) {
   const { camera } = useThree();
@@ -51,10 +52,21 @@ export function ReefStoryCanvas({ progress }: { progress: number }) {
 
   return (
     <div className="absolute inset-0">
-      <Canvas
+      <WebGLCanvas
         camera={{ position: [0, 0.6, 4.5], fov: 45 }}
         dpr={reduced ? [1, 1] : [1, 1.5]}
         gl={{ antialias: true, alpha: true }}
+        fallback={
+          <div className="absolute inset-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/rov/underwater-action.jpg"
+              alt=""
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#041018]/90 via-[#041018]/40 to-transparent" />
+          </div>
+        }
       >
         <Suspense fallback={null}>
           <UnderwaterLights />
@@ -62,7 +74,7 @@ export function ReefStoryCanvas({ progress }: { progress: number }) {
           <ReefModel opacity={Math.max(0.15, reefOpacity)} />
           <ScrollDiveController progress={reduced ? 0.6 : progress} />
         </Suspense>
-      </Canvas>
+      </WebGLCanvas>
     </div>
   );
 }
