@@ -2,7 +2,7 @@
 
 import { Environment, ContactShadows } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { MathUtils, Vector3 } from "three";
 import type { RovFeature } from "@/content/rov-features";
 import { RovModel } from "./RovModel";
@@ -26,7 +26,7 @@ function FeatureCamera({
   }, [activeIndex, features]);
 
   useFrame(() => {
-    camera.position.lerp(targetPos.current, 0.06);
+    camera.position.lerp(targetPos.current, 0.09);
     camera.lookAt(lookAt.current);
   });
 
@@ -40,18 +40,6 @@ export function RovFeatureCanvas({
   features: RovFeature[];
   activeIndex: number;
 }) {
-  const [pointer, setPointer] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handler = (e: PointerEvent) => {
-      const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = -(e.clientY / window.innerHeight) * 2 + 1;
-      setPointer({ x: x * 0.25, y: y * 0.2 });
-    };
-    window.addEventListener("pointermove", handler);
-    return () => window.removeEventListener("pointermove", handler);
-  }, []);
-
   return (
     <div className="absolute inset-0">
       <Canvas
@@ -61,14 +49,14 @@ export function RovFeatureCanvas({
       >
         <Suspense fallback={null}>
           <UnderwaterLights />
-          <Environment preset="warehouse" environmentIntensity={0.7} />
+          <Environment preset="warehouse" environmentIntensity={0.55} />
           <FeatureCamera features={features} activeIndex={activeIndex} />
-          <RovModel pointer={pointer} lookStrength={0.2} bob />
+          <RovModel interactive={false} bob lookStrength={0} />
           <ContactShadows
-            position={[0, -1.2, 0]}
-            opacity={0.3}
+            position={[0, -1.05, 0]}
+            opacity={0.28}
             scale={7}
-            blur={2.2}
+            blur={2.4}
             color="#07101c"
           />
         </Suspense>

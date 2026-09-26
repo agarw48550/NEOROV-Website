@@ -35,7 +35,7 @@ function ScrollDiveController({ progress }: { progress: number }) {
 
   return (
     <group ref={rov}>
-      <RovModel bob={false} scale={undefined} position={[0, 0, 0]} />
+      <RovModel bob={false} interactive={false} position={[0, 0, 0]} />
     </group>
   );
 }

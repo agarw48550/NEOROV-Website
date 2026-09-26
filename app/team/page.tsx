@@ -53,16 +53,16 @@ export default function TeamPage() {
               transition={{ duration: 0.55, delay: i * 0.08 }}
               className="group relative"
             >
-              <div className="relative aspect-[3/4] overflow-hidden bg-[#121c32]">
+              <div className="relative aspect-[3/4] overflow-hidden bg-[#0a1520]">
                 <Image
                   src={member.image}
                   alt={member.name}
                   fill
                   priority={i < 2}
-                  className="object-cover object-top transition duration-700 group-hover:scale-[1.04]"
+                  className="object-cover object-top transition duration-700 group-hover:scale-[1.03]"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#041018] via-[#041018]/25 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#030d14] via-[#030d14]/20 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-4">
                   <p className="text-[10px] tracking-[0.25em] uppercase text-secondary">
                     {String(i + 1).padStart(2, "0")} · {member.role}
@@ -70,10 +70,10 @@ export default function TeamPage() {
                   <h2 className="font-display mt-1 text-2xl text-foreground">
                     {member.name}
                   </h2>
-                  <p className="mt-1 text-xs text-accent">{member.focus}</p>
+                  <p className="mt-1 text-xs text-foreground/55">{member.focus}</p>
                 </div>
               </div>
-              <p className="mt-4 text-sm leading-relaxed text-foreground/70">
+              <p className="mt-4 text-sm leading-relaxed text-foreground/65">
                 {member.bio}
               </p>
             </motion.article>

@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #041018;
-  --foreground: #f4fafc;
-  --primary: #2f6f7a;
-  --secondary: #2fd0e8;
-  --accent: #3ecf9a;
-  --coral: #e07a45;
-  --muted: color-mix(in srgb, var(--foreground) 55%, transparent);
-  --surface: color-mix(in srgb, var(--primary) 28%, var(--background));
+  --background: #030d14;
+  --foreground: #f2f7fa;
+  --primary: #1e4a56;
+  --secondary: #6eb8c9;
+  --accent: #7bc4a8;
+  --coral: #c4845c;
+  --muted: color-mix(in srgb, var(--foreground) 52%, transparent);
+  --surface: color-mix(in srgb, var(--primary) 22%, var(--background));
 }
 
 @theme inline {
@@ -45,9 +45,9 @@ body {
 
 .depth-gradient {
   background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in srgb, var(--secondary) 24%, transparent), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 80% 60%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 50%),
-    linear-gradient(180deg, #031018 0%, var(--background) 40%, #020c12 100%);
+    radial-gradient(ellipse 90% 55% at 50% -15%, color-mix(in srgb, var(--secondary) 14%, transparent), transparent 58%),
+    radial-gradient(ellipse 50% 35% at 85% 70%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 52%),
+    linear-gradient(180deg, #021018 0%, var(--background) 45%, #020a10 100%);
 }
 
 .caustics {
