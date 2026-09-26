@@ -11,8 +11,8 @@ export type RovFeature = {
 };
 
 /**
- * Focuses derived from mesh material bounds after upright correction
- * (acrylic tube along Z; aft ≈ −Z; thrusters span ±X).
+ * Focuses after upright correction (acrylic along Z; aft ≈ −Z; thrusters ±X).
+ * Cameras stay outside thruster envelopes (~|x| > 1.0) so chapters don’t clip.
  */
 export const rovFeatures: RovFeature[] = [
   {
@@ -20,47 +20,51 @@ export const rovFeatures: RovFeature[] = [
     title: "Open PVC frame",
     body: "An open-frame cage of ~35 × 30 × 25 cm at ~5.9 kg in air. Water flows through the skeleton to cut drag, components stay accessible, and the structure shields the acrylic capsule from reef impacts.",
     lookAt: [0, 0, 0],
-    camera: [1.85, 0.95, 2.05],
+    camera: [1.75, 0.9, 2.0],
     image: "/images/rov/frame-cad.png",
   },
   {
     id: "capsule",
     title: "Acrylic dry capsule",
-    body: "Pixhawk, Raspberry Pi, Arduino Nano Every, and the 4S LiPo live inside a transparent acrylic cylinder closed by machined aluminium end caps with dual O-ring grooves — redundant seals rated toward a 30 m design target.",
-    lookAt: [0.0, -0.05, 0.03],
-    camera: [1.15, 0.08, 0.05],
+    body: "Flight computer, companion computer, and the 4S LiPo live inside a transparent acrylic cylinder closed by machined aluminium end caps with dual O-ring grooves — redundant seals rated toward a 30 m design target.",
+    // Elevated side view of the tube — above thruster height
+    lookAt: [0.0, -0.04, 0.05],
+    camera: [1.05, 0.55, 0.35],
     image: "/images/rov/onboard-electronics.jpg",
   },
   {
     id: "thrusters",
     title: "Four T200 thrusters",
     body: "Blue Robotics T200 BLDC thrusters in Simple ROV 4 geometry: two horizontal for forward thrust and yaw, two vertical for heave and roll correction — flooded-motor design for power density underwater.",
-    lookAt: [0.0, 0.1, -0.2],
-    camera: [1.65, 0.4, 0.25],
+    lookAt: [0.7, 0.2, -0.15],
+    camera: [1.55, 0.4, 0.55],
     image: "/images/rov/underwater-action.jpg",
   },
   {
     id: "stack",
     title: "Flight & companion stack",
     body: "Pixhawk 2.4.8 running ArduSub, a Raspberry Pi on BlueOS, and topside QGroundControl over the tether — the pilot link that turns shore-side inputs into reef-scale video and telemetry.",
-    lookAt: [0.0, 0.0, 0.05],
-    camera: [0.4, 0.55, 0.95],
+    // Peek into the tube from slightly forward / above
+    lookAt: [0.0, 0.0, 0.1],
+    camera: [0.35, 0.55, 0.85],
     image: "/images/rov/onboard-view.jpg",
   },
   {
     id: "sensors",
     title: "Depth, temperature & pH",
     body: "A Blue Robotics Bar30 logs depth, pressure, and water temperature over I²C so abiotic conditions travel with every video transect.",
-    lookAt: [0.0, 0.05, -0.45],
-    camera: [0.35, 0.35, -1.55],
+    // Lower green / FR4 mount region
+    lookAt: [0.0, -0.25, 0.05],
+    camera: [1.1, -0.35, 0.85],
     image: "/images/rov/poolside-rov-web.jpg",
   },
   {
     id: "tether",
     title: "30 m Cat6 tether",
     body: "A shielded Ethernet tether carries pilot commands down and telemetry plus 1080p video up to a laptop on the surface — low latency, shore- or boat-deployable, no radio through seawater.",
-    lookAt: [0.0, 0.05, -0.55],
-    camera: [-0.45, 0.4, -1.85],
+    // Aft view of rear plate / wire exit
+    lookAt: [0.0, 0.05, -0.45],
+    camera: [0.35, 0.4, -1.35],
     image: "/images/rov/gopro-poolside.jpg",
   },
 ];
@@ -87,4 +91,7 @@ export const rovGallery = [
   "/images/rov/team-field.jpg",
   "/images/rov/tioman-reef.jpg",
   "/images/rov/hantu-reef.jpg",
+  "/images/rov/gopro-hull.jpg",
+  "/images/rov/gopro-waterline.jpg",
+  "/images/rov/onboard-capsule.jpg",
 ];

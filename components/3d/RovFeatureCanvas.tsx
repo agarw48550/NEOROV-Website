@@ -1,12 +1,13 @@
 "use client";
 
 import { Environment, ContactShadows } from "@react-three/drei";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useRef } from "react";
 import { MathUtils, Vector3 } from "three";
 import type { RovFeature } from "@/content/rov-features";
 import { RovModel } from "./RovModel";
 import { UnderwaterLights } from "./UnderwaterLights";
+import { WebGLCanvas } from "./WebGLCanvas";
 
 function FeatureCamera({
   features,
@@ -26,7 +27,7 @@ function FeatureCamera({
   }, [activeIndex, features]);
 
   useFrame(() => {
-    camera.position.lerp(targetPos.current, 0.09);
+    camera.position.lerp(targetPos.current, 0.12);
     camera.lookAt(lookAt.current);
   });
 
@@ -42,7 +43,7 @@ export function RovFeatureCanvas({
 }) {
   return (
     <div className="absolute inset-0">
-      <Canvas
+      <WebGLCanvas
         camera={{ position: features[0].camera, fov: 40 }}
         dpr={[1, 1.75]}
         gl={{ antialias: true, alpha: true }}
@@ -60,7 +61,7 @@ export function RovFeatureCanvas({
             color="#07101c"
           />
         </Suspense>
-      </Canvas>
+      </WebGLCanvas>
     </div>
   );
 }
