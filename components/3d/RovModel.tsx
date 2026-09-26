@@ -3,119 +3,75 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
-import type { Group, Mesh } from "three";
-import {
-  Box3,
-  Color,
-  MeshPhysicalMaterial,
-  MeshStandardMaterial,
-  Vector3,
-} from "three";
+import type { Group, Mesh, MeshStandardMaterial } from "three";
+import { Box3, Color, MeshPhysicalMaterial, Vector3 } from "three";
 
 type RovModelProps = {
   url?: string;
   scale?: number;
   position?: [number, number, number];
-  /** When true, gently bob in place */
   bob?: boolean;
-  /** Pointer NDC coords (-1..1) for look-at */
   pointer?: { x: number; y: number };
   lookStrength?: number;
 };
 
-const PVC = new Color("#eef3f7");
-const MOUNT = new Color("#1f6b4a");
-const ACCENT = new Color("#0aa4c2");
-const DARK = new Color("#1a2333");
-
-function paintRovScene(root: Group) {
-  const box = new Box3().setFromObject(root);
-  const size = new Vector3();
-  const center = new Vector3();
-  box.getSize(size);
-  box.getCenter(center);
-
+function enhanceMaterials(root: Group) {
   root.traverse((obj) => {
     const mesh = obj as Mesh;
-    if (!mesh.isMesh) return;
+    if (!mesh.isMesh || !mesh.material) return;
 
-    const name = (mesh.name || "").toLowerCase();
-    const geoBox = new Box3().setFromObject(mesh);
-    const geoSize = new Vector3();
-    const geoCenter = new Vector3();
-    geoBox.getSize(geoSize);
-    geoBox.getCenter(geoCenter);
+    const materials = Array.isArray(mesh.material)
+      ? mesh.material
+      : [mesh.material];
 
-    const relY = (geoCenter.y - center.y) / Math.max(size.y, 1);
-    const relZ = (geoCenter.z - center.z) / Math.max(size.z, 1);
-    const aspect =
-      Math.max(geoSize.x, geoSize.y, geoSize.z) /
-      Math.max(0.001, Math.min(geoSize.x, geoSize.y, geoSize.z));
+    materials.forEach((mat, index) => {
+      const std = mat as MeshStandardMaterial;
+      const name = (std.name || mesh.name || "").toLowerCase();
 
-    let material: MeshStandardMaterial | MeshPhysicalMaterial;
+      if (name.includes("acrylic") || name.includes("clear")) {
+        const physical = new MeshPhysicalMaterial({
+          color: std.color?.clone() ?? new Color("#c8e7f5"),
+          metalness: 0.05,
+          roughness: 0.08,
+          transmission: 0.72,
+          thickness: 0.45,
+          transparent: true,
+          opacity: 0.78,
+          name: std.name,
+        });
+        if (Array.isArray(mesh.material)) mesh.material[index] = physical;
+        else mesh.material = physical;
+        return;
+      }
 
-    if (
-      name.includes("thruster") ||
-      name.includes("t200") ||
-      name.includes("motor") ||
-      (aspect < 2.2 && geoSize.x / size.x < 0.35 && Math.abs(relY) > 0.15)
-    ) {
-      material = new MeshStandardMaterial({
-        color: DARK,
-        metalness: 0.45,
-        roughness: 0.4,
-      });
-    } else if (
-      name.includes("mount") ||
-      name.includes("green") ||
-      name.includes("strap") ||
-      name.includes("ring") ||
-      (aspect < 3.5 && Math.abs(relZ) < 0.25 && Math.abs(relY) < 0.2)
-    ) {
-      material = new MeshStandardMaterial({
-        color: MOUNT,
-        metalness: 0.15,
-        roughness: 0.45,
-        emissive: MOUNT,
-        emissiveIntensity: 0.08,
-      });
-    } else if (
-      name.includes("capsule") ||
-      name.includes("tube") ||
-      name.includes("acrylic") ||
-      name.includes("cylinder")
-    ) {
-      material = new MeshPhysicalMaterial({
-        color: "#c8e7f5",
-        metalness: 0.05,
-        roughness: 0.12,
-        transmission: 0.55,
-        thickness: 0.4,
-        transparent: true,
-        opacity: 0.85,
-      });
-    } else if (name.includes("tether") || name.includes("cable")) {
-      material = new MeshStandardMaterial({
-        color: ACCENT,
-        metalness: 0.2,
-        roughness: 0.35,
-      });
-    } else {
-      // Default: white PVC frame with a cool underwater tint
-      material = new MeshPhysicalMaterial({
-        color: PVC,
-        metalness: 0.08,
-        roughness: 0.32,
-        clearcoat: 0.55,
-        clearcoatRoughness: 0.28,
-        sheen: 0.2,
-        sheenColor: ACCENT,
-      });
-    }
+      if (name.includes("fr4")) {
+        std.color = new Color("#1f6b4a");
+        std.emissive = new Color("#0d3d2a");
+        std.emissiveIntensity = 0.12;
+        std.roughness = 0.55;
+        std.metalness = 0.1;
+        std.needsUpdate = true;
+        return;
+      }
 
-    mesh.material = material;
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
+      if (name.includes("abs") || name.includes("white")) {
+        std.color = new Color("#eef3f7");
+        std.roughness = 0.35;
+        std.metalness = 0.05;
+        std.needsUpdate = true;
+        return;
+      }
+
+      if (name.includes("blue")) {
+        std.color = new Color("#2a6fbf");
+        std.metalness = 0.55;
+        std.roughness = 0.3;
+        std.needsUpdate = true;
+      }
+
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+    });
   });
 }
 
@@ -131,7 +87,7 @@ export function RovModel({
   const { scene } = useGLTF(url, true);
   const cloned = useMemo(() => {
     const next = scene.clone(true);
-    paintRovScene(next);
+    enhanceMaterials(next);
     return next;
   }, [scene]);
 
@@ -163,40 +119,6 @@ export function RovModel({
   return (
     <group ref={group} position={position} scale={scale}>
       <primitive object={cloned} />
-      {/* Green capsule mounts — visual color when GLB lacks materials */}
-      <mesh position={[0, 0.05, 0.15]} rotation={[0, 0, Math.PI / 2]}>
-        <torusGeometry args={[0.22, 0.035, 16, 48]} />
-        <meshStandardMaterial
-          color="#1f6b4a"
-          metalness={0.2}
-          roughness={0.4}
-          emissive="#1f6b4a"
-          emissiveIntensity={0.12}
-        />
-      </mesh>
-      <mesh position={[0, 0.05, -0.2]} rotation={[0, 0, Math.PI / 2]}>
-        <torusGeometry args={[0.22, 0.035, 16, 48]} />
-        <meshStandardMaterial
-          color="#1f6b4a"
-          metalness={0.2}
-          roughness={0.4}
-          emissive="#1f6b4a"
-          emissiveIntensity={0.12}
-        />
-      </mesh>
-      {/* Acrylic capsule hint */}
-      <mesh position={[0, 0.05, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <cylinderGeometry args={[0.18, 0.18, 0.55, 32]} />
-        <meshPhysicalMaterial
-          color="#b9dff2"
-          metalness={0}
-          roughness={0.08}
-          transmission={0.65}
-          thickness={0.35}
-          transparent
-          opacity={0.55}
-        />
-      </mesh>
     </group>
   );
 }

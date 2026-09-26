@@ -141,7 +141,10 @@ export function RovPageClient() {
           </div>
           <div className="mt-14 grid gap-4 sm:grid-cols-3">
             {[
+              "/images/rov/tioman-reef.jpg",
+              "/images/rov/hantu-reef.jpg",
               "/images/rov/underwater-action.jpg",
+              "/images/rov/onboard-view.jpg",
               "/images/rov/poolside-rov-web.jpg",
               "/images/rov/frame-cad.png",
             ].map((src) => (

@@ -25,7 +25,7 @@ export const rovFeatures: RovFeature[] = [
     body: "Pixhawk, Raspberry Pi, Arduino Nano Every, and the 4S LiPo live inside a transparent acrylic cylinder closed by machined aluminium end caps with dual O-ring grooves — redundant seals rated toward a 30 m design target.",
     lookAt: [0, 0.05, 0.05],
     camera: [0.15, 0.2, 0.95],
-    image: "/images/rov/poolside-rov-web.jpg",
+    image: "/images/rov/onboard-view.jpg",
   },
   {
     id: "thrusters",
@@ -41,7 +41,7 @@ export const rovFeatures: RovFeature[] = [
     body: "Pixhawk 2.4.8 running ArduSub, a Raspberry Pi on BlueOS, and topside QGroundControl over the tether — the pilot link that turns shore-side inputs into reef-scale video and telemetry.",
     lookAt: [0, 0.08, 0.05],
     camera: [0.25, 0.45, 1.05],
-    image: "/images/rov/poolside-rov-web.jpg",
+    image: "/images/rov/onboard-view.jpg",
   },
   {
     id: "sensors",
