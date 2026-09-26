@@ -69,6 +69,43 @@ body {
   animation: cue-pulse 1.8s ease-in-out infinite;
 }
 
+.sonar-rings {
+  background:
+    radial-gradient(circle at 70% 35%, transparent 28%, color-mix(in srgb, var(--secondary) 12%, transparent) 29%, transparent 30%),
+    radial-gradient(circle at 70% 35%, transparent 42%, color-mix(in srgb, var(--secondary) 8%, transparent) 43%, transparent 44%),
+    radial-gradient(circle at 70% 35%, transparent 56%, color-mix(in srgb, var(--accent) 6%, transparent) 57%, transparent 58%);
+  animation: sonar-pulse 10s ease-out infinite;
+}
+
+.depth-line {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--secondary) 55%, transparent),
+    transparent
+  );
+  animation: float-bob 7s ease-in-out infinite;
+}
+
+.float-orb {
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--secondary) 22%, transparent),
+    transparent 70%
+  );
+  filter: blur(2px);
+  animation: float-bob 9s ease-in-out infinite;
+}
+
+.float-orb-delayed {
+  animation-delay: -3.5s;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent) 18%, transparent),
+    transparent 70%
+  );
+}
+
 @keyframes caustic-drift {
   from {
     transform: translate3d(-2%, -1%, 0) scale(1);
@@ -111,6 +148,20 @@ body {
   }
 }
 
+@keyframes sonar-pulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.35;
+  }
+  55% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.12);
+    opacity: 0.25;
+  }
+}
+
 .prose-article h2 {
   font-family: var(--font-display);
   font-size: 1.75rem;
@@ -137,14 +188,31 @@ body {
   .caustics,
   .mist-drift,
   .scroll-cue,
-  .animate-float {
+  .animate-float,
+  .sonar-rings,
+  .depth-line,
+  .float-orb,
+  .float-orb-delayed {
     animation: none !important;
   }
 }
 
-@media (max-width: 640px) {
+@supports (padding: max(0px)) {
   body {
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
   }
+}
+
+/* Landscape phones / short viewports: keep hero content readable */
+@media (max-height: 480px) and (orientation: landscape) {
+  .scroll-cue {
+    display: none;
+  }
+}
+
+/* Prevent media overflow on odd aspect ratios without breaking fill/cover layouts */
+img:not([style*="position"]),
+video:not(.object-cover) {
+  max-width: 100%;
 }

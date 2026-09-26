@@ -80,18 +80,56 @@ export const fieldRecord = [
 
 export const rovGallery = [
   "/images/rov/underwater-action.jpg",
+  "/images/field/hantu-01.jpg",
   "/images/rov/underwater-rov.jpg",
+  "/images/field/tioman-03.jpg",
   "/images/rov/poolside-rov-web.jpg",
+  "/images/field/workshop-01.jpg",
   "/images/rov/gopro-poolside.jpg",
+  "/images/exhibition/exhibit-demo-01.jpg",
   "/images/rov/gopro-surface.jpg",
+  "/images/field/tioman-07.jpg",
   "/images/rov/gopro-deploy.jpg",
+  "/images/field/phone-03.jpg",
   "/images/rov/onboard-view.jpg",
+  "/images/field/workshop-04.jpg",
   "/images/rov/onboard-electronics.jpg",
+  "/images/field/hantu-03.jpg",
   "/images/rov/onboard-wiring.jpg",
+  "/images/exhibition/exhibit-booth-02.jpg",
   "/images/rov/team-field.jpg",
+  "/images/field/tioman-05.jpg",
   "/images/rov/tioman-reef.jpg",
+  "/images/field/telemetry-02.png",
   "/images/rov/hantu-reef.jpg",
+  "/images/field/workshop-08.jpg",
   "/images/rov/gopro-hull.jpg",
+  "/images/exhibition/exhibit-02.jpg",
   "/images/rov/gopro-waterline.jpg",
+  "/images/field/phone-07.jpg",
   "/images/rov/onboard-capsule.jpg",
+  "/images/field/hantu-05.jpg",
 ];
+
+export const rovGalleryVideos = [
+  {
+    src: "/media/field-hantu.mp4",
+    poster: "/images/field/hantu-02.jpg",
+    label: "Hantu transect",
+  },
+  {
+    src: "/media/workshop-pool.mp4",
+    poster: "/images/rov/poolside-rov-web.jpg",
+    label: "Pool trials",
+  },
+  {
+    src: "/media/field-tioman-boat.mp4",
+    poster: "/images/field/tioman-08.jpg",
+    label: "Tioman staging",
+  },
+  {
+    src: "/media/workshop-build.mp4",
+    poster: "/images/field/workshop-04.jpg",
+    label: "Bench build",
+  },
+] as const;
