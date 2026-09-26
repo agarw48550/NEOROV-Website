@@ -3,8 +3,14 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
-import type { Group, Mesh, MeshStandardMaterial } from "three";
-import { Box3, Color, MeshPhysicalMaterial, Vector3 } from "three";
+import type { Group, Mesh } from "three";
+import {
+  Box3,
+  Color,
+  MeshPhysicalMaterial,
+  MeshStandardMaterial,
+  Vector3,
+} from "three";
 
 type RovModelProps = {
   url?: string;
@@ -15,78 +21,82 @@ type RovModelProps = {
   lookStrength?: number;
 };
 
-function enhanceMaterials(root: Group) {
+function colorForName(name: string): MeshStandardMaterial | MeshPhysicalMaterial {
+  const n = name.toLowerCase();
+
+  if (n.includes("acrylic") || n.includes("clear")) {
+    return new MeshPhysicalMaterial({
+      color: new Color("#8fd0ea"),
+      metalness: 0,
+      roughness: 0.05,
+      transmission: 0.8,
+      thickness: 0.55,
+      transparent: true,
+      opacity: 0.65,
+      name,
+    });
+  }
+  if (n.includes("fr4")) {
+    return new MeshStandardMaterial({
+      color: new Color("#14964f"),
+      emissive: new Color("#0a5c30"),
+      emissiveIntensity: 0.45,
+      metalness: 0.1,
+      roughness: 0.45,
+      name,
+    });
+  }
+  if (n.includes("blue") || n.includes("opaque")) {
+    return new MeshStandardMaterial({
+      color: new Color("#2f7dff"),
+      emissive: new Color("#16448c"),
+      emissiveIntensity: 0.25,
+      metalness: 0.55,
+      roughness: 0.28,
+      name,
+    });
+  }
+  if (n.includes("aluminum") || n.includes("steel")) {
+    return new MeshStandardMaterial({
+      color: new Color("#8e9aab"),
+      metalness: 0.9,
+      roughness: 0.2,
+      name,
+    });
+  }
+  // ABS / default frame — keep light but not blown-out
+  return new MeshStandardMaterial({
+    color: new Color("#e8eef5"),
+    metalness: 0.08,
+    roughness: 0.32,
+    name,
+  });
+}
+
+function paintRov(root: Group) {
+  let painted = 0;
   root.traverse((obj) => {
     const mesh = obj as Mesh;
-    if (!mesh.isMesh || !mesh.material) return;
+    if (!mesh.isMesh) return;
 
-    const materials = Array.isArray(mesh.material)
+    const sourceMats = Array.isArray(mesh.material)
       ? mesh.material
       : [mesh.material];
 
-    materials.forEach((mat, index) => {
-      const std = mat as MeshStandardMaterial;
-      const name = (std.name || mesh.name || "").toLowerCase();
-
-      if (name.includes("acrylic") || name.includes("clear")) {
-        const physical = new MeshPhysicalMaterial({
-          color: new Color("#9fd8f0"),
-          metalness: 0.02,
-          roughness: 0.05,
-          transmission: 0.78,
-          thickness: 0.5,
-          transparent: true,
-          opacity: 0.7,
-          name: std.name,
-        });
-        if (Array.isArray(mesh.material)) mesh.material[index] = physical;
-        else mesh.material = physical;
-        return;
-      }
-
-      if (name.includes("fr4")) {
-        std.color = new Color("#1a8f4e");
-        std.emissive = new Color("#0b5a30");
-        std.emissiveIntensity = 0.35;
-        std.roughness = 0.5;
-        std.metalness = 0.08;
-        std.needsUpdate = true;
-        return;
-      }
-
-      if (name.includes("abs") || name.includes("white")) {
-        std.color = new Color("#f5f8fb");
-        std.roughness = 0.28;
-        std.metalness = 0.04;
-        std.needsUpdate = true;
-        return;
-      }
-
-      if (name.includes("blue") || name.includes("opaque(202")) {
-        std.color = new Color("#2f7dff");
-        std.emissive = new Color("#123a80");
-        std.emissiveIntensity = 0.18;
-        std.metalness = 0.55;
-        std.roughness = 0.25;
-        std.needsUpdate = true;
-        return;
-      }
-
-      if (name.includes("aluminum") || name.includes("steel")) {
-        std.color = new Color("#9aa7b8");
-        std.metalness = 0.85;
-        std.roughness = 0.22;
-        std.needsUpdate = true;
-      }
-
-      mesh.castShadow = true;
-      mesh.receiveShadow = true;
+    const next = sourceMats.map((mat) => {
+      const name = (mat && "name" in mat && mat.name) || mesh.name || `part-${painted}`;
+      painted += 1;
+      return colorForName(String(name));
     });
+
+    mesh.material = next.length === 1 ? next[0] : next;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
   });
 }
 
 export function RovModel({
-  url = "/models/neorov.glb",
+  url = "/models/neorov-colored.glb",
   scale: scaleProp,
   position = [0, 0, 0],
   bob = true,
@@ -97,7 +107,7 @@ export function RovModel({
   const { scene } = useGLTF(url, true);
   const cloned = useMemo(() => {
     const next = scene.clone(true);
-    enhanceMaterials(next);
+    paintRov(next);
     return next;
   }, [scene]);
 
@@ -127,10 +137,10 @@ export function RovModel({
   });
 
   return (
-    <group ref={group} position={position} scale={scale} rotation={[0, Math.PI * 0.15, 0]}>
+    <group ref={group} position={position} scale={scale}>
       <primitive object={cloned} />
     </group>
   );
 }
 
-useGLTF.preload("/models/neorov.glb");
+useGLTF.preload("/models/neorov-colored.glb");
