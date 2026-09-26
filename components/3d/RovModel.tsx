@@ -30,13 +30,13 @@ function enhanceMaterials(root: Group) {
 
       if (name.includes("acrylic") || name.includes("clear")) {
         const physical = new MeshPhysicalMaterial({
-          color: std.color?.clone() ?? new Color("#c8e7f5"),
-          metalness: 0.05,
-          roughness: 0.08,
-          transmission: 0.72,
-          thickness: 0.45,
+          color: new Color("#9fd8f0"),
+          metalness: 0.02,
+          roughness: 0.05,
+          transmission: 0.78,
+          thickness: 0.5,
           transparent: true,
-          opacity: 0.78,
+          opacity: 0.7,
           name: std.name,
         });
         if (Array.isArray(mesh.material)) mesh.material[index] = physical;
@@ -45,27 +45,37 @@ function enhanceMaterials(root: Group) {
       }
 
       if (name.includes("fr4")) {
-        std.color = new Color("#1f6b4a");
-        std.emissive = new Color("#0d3d2a");
-        std.emissiveIntensity = 0.12;
-        std.roughness = 0.55;
-        std.metalness = 0.1;
+        std.color = new Color("#1a8f4e");
+        std.emissive = new Color("#0b5a30");
+        std.emissiveIntensity = 0.35;
+        std.roughness = 0.5;
+        std.metalness = 0.08;
         std.needsUpdate = true;
         return;
       }
 
       if (name.includes("abs") || name.includes("white")) {
-        std.color = new Color("#eef3f7");
-        std.roughness = 0.35;
-        std.metalness = 0.05;
+        std.color = new Color("#f5f8fb");
+        std.roughness = 0.28;
+        std.metalness = 0.04;
         std.needsUpdate = true;
         return;
       }
 
-      if (name.includes("blue")) {
-        std.color = new Color("#2a6fbf");
+      if (name.includes("blue") || name.includes("opaque(202")) {
+        std.color = new Color("#2f7dff");
+        std.emissive = new Color("#123a80");
+        std.emissiveIntensity = 0.18;
         std.metalness = 0.55;
-        std.roughness = 0.3;
+        std.roughness = 0.25;
+        std.needsUpdate = true;
+        return;
+      }
+
+      if (name.includes("aluminum") || name.includes("steel")) {
+        std.color = new Color("#9aa7b8");
+        std.metalness = 0.85;
+        std.roughness = 0.22;
         std.needsUpdate = true;
       }
 
@@ -117,7 +127,7 @@ export function RovModel({
   });
 
   return (
-    <group ref={group} position={position} scale={scale}>
+    <group ref={group} position={position} scale={scale} rotation={[0, Math.PI * 0.15, 0]}>
       <primitive object={cloned} />
     </group>
   );
