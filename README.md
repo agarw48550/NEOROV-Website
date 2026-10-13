@@ -1,6 +1,6 @@
 # Reef Monitoring ROV
 
-Website for the Reef Monitoring ROV project — a custom pilot-operated underwater vehicle for shallow-water coastal monitoring.
+Website for the Reef Monitoring ROV project, a custom pilot-operated underwater vehicle for shallow-water coastal monitoring.
 
 ## Develop
 

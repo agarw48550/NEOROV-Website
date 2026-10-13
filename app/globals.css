@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  /* 8pt spacing rhythm: use Tailwind steps 2/4/6/8/12/16/20/24/32 only */
   --background: #030d14;
   --foreground: #f2f7fa;
   --primary: #1e4a56;
@@ -9,6 +10,21 @@
   --coral: #c4845c;
   --muted: color-mix(in srgb, var(--foreground) 52%, transparent);
   --surface: color-mix(in srgb, var(--primary) 22%, var(--background));
+  --surface-raised: #0a1220;
+  --border-subtle: color-mix(in srgb, var(--foreground) 8%, transparent);
+  --radius-ui: 4px;
+
+  /* Type ramp (rem): display / heading / body / caption */
+  --text-display-xl: clamp(2.5rem, 6vw, 4.5rem);
+  --text-display-lg: clamp(2rem, 4.5vw, 3.5rem);
+  --text-display-md: clamp(1.75rem, 3vw, 2.25rem);
+  --text-h3: 1.25rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-caption: 0.75rem;
+  --leading-display: 1.08;
+  --leading-heading: 1.2;
+  --leading-body: 1.65;
 }
 
 @theme inline {
@@ -36,6 +52,140 @@ body {
 
 .font-display {
   font-family: var(--font-display);
+}
+
+/* Layout */
+.page-container {
+  margin-inline: auto;
+  max-width: 72rem;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .page-container {
+    padding-inline: 2rem;
+  }
+}
+
+.section-y {
+  padding-block: 4rem;
+}
+
+@media (min-width: 768px) {
+  .section-y {
+    padding-block: 6rem;
+  }
+}
+
+.page-hero {
+  padding-top: 8rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .page-hero {
+    padding-bottom: 6rem;
+  }
+}
+
+/* Typography utilities */
+.text-eyebrow {
+  font-size: var(--text-caption);
+  letter-spacing: 0.2em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
+.text-display-xl {
+  font-size: var(--text-display-xl);
+  line-height: var(--leading-display);
+  letter-spacing: -0.02em;
+}
+
+.text-display-lg {
+  font-size: var(--text-display-lg);
+  line-height: var(--leading-display);
+  letter-spacing: -0.02em;
+}
+
+.text-display-md {
+  font-size: var(--text-display-md);
+  line-height: var(--leading-heading);
+  letter-spacing: -0.015em;
+}
+
+.text-h3 {
+  font-size: var(--text-h3);
+  line-height: var(--leading-heading);
+}
+
+.text-body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+.text-body-sm {
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-ui);
+  padding: 0.75rem 1.5rem;
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  line-height: 1.25;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.btn:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--secondary) 65%, transparent);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--secondary);
+  color: var(--background);
+}
+
+.btn-primary:hover {
+  background: color-mix(in srgb, var(--secondary) 88%, white);
+}
+
+.btn-secondary {
+  border: 1px solid color-mix(in srgb, var(--foreground) 22%, transparent);
+  color: color-mix(in srgb, var(--foreground) 92%, transparent);
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  border-color: color-mix(in srgb, var(--secondary) 55%, transparent);
+  color: var(--secondary);
+}
+
+.btn-ghost {
+  color: var(--secondary);
+  padding-inline: 0;
+}
+
+.btn-ghost:hover {
+  color: color-mix(in srgb, var(--secondary) 80%, white);
+}
+
+.card-media {
+  overflow: hidden;
+  border-radius: var(--radius-ui);
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
 }
 
 ::selection {

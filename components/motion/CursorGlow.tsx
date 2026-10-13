@@ -28,9 +28,9 @@ export function CursorGlow({ children }: { children: ReactNode }) {
   const x = useSpring(rawX, { stiffness: 120, damping: 28, mass: 0.4 });
   const y = useSpring(rawY, { stiffness: 120, damping: 28, mass: 0.4 });
   const background = useMotionTemplate`
-    radial-gradient(520px circle at ${x}px ${y}px,
-      color-mix(in srgb, var(--secondary) 16%, transparent),
-      transparent 55%)
+    radial-gradient(480px circle at ${x}px ${y}px,
+      color-mix(in srgb, var(--secondary) 7%, transparent),
+      transparent 58%)
   `;
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export function CursorGlow({ children }: { children: ReactNode }) {
     <div className="relative">
       <motion.div
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-[1] mix-blend-screen"
+        className="pointer-events-none fixed inset-0 z-[1]"
         style={{ background }}
       />
       {children}
@@ -57,7 +57,7 @@ export function CursorGlow({ children }: { children: ReactNode }) {
   );
 }
 
-/** Parallax offset driven by pointer — wrap layers with different strengths. */
+/** Parallax offset driven by pointer. Wrap layers with different strengths. */
 export function usePointerParallax(strength = 18) {
   const reduced = usePrefersReducedMotion();
   const mx = useMotionValue(0);

@@ -10,7 +10,7 @@ type Props = {
   playInView?: boolean;
 };
 
-/** Muted looping video that autoplays when visible — for section backgrounds & galleries. */
+/** Muted looping video that autoplays when visible for section backgrounds and galleries. */
 export function InlineVideo({
   src,
   poster,
@@ -54,17 +54,33 @@ export function InlineVideo({
   }, [playInView, src]);
 
   return (
-    <video
-      ref={ref}
-      className={`${className} ${ready ? "opacity-100" : "opacity-90"} transition-opacity duration-700`}
-      muted
-      loop
-      playsInline
-      preload="metadata"
-      poster={poster}
-      aria-hidden
-    >
-      <source src={src} type="video/mp4" />
-    </video>
+    <div className={`relative ${className}`}>
+      {!ready && poster ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={poster}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover opacity-80"
+        />
+      ) : null}
+      {!ready && !poster ? (
+        <div
+          className="absolute inset-0 animate-pulse bg-[color-mix(in_srgb,var(--primary)_40%,var(--background))]"
+          aria-hidden
+        />
+      ) : null}
+      <video
+        ref={ref}
+        className={`relative h-full w-full object-cover ${ready ? "opacity-100" : "opacity-0"} transition-opacity duration-500`}
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster={poster}
+        aria-hidden
+      >
+        <source src={src} type="video/mp4" />
+      </video>
+    </div>
   );
 }

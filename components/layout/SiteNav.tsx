@@ -35,7 +35,7 @@ export function SiteNav() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-8">
+      <div className="page-container flex items-center justify-between py-4">
         <Link href="/" className="font-display text-base tracking-tight text-foreground/95 md:text-lg">
           Reef Monitoring ROV
         </Link>
@@ -72,8 +72,8 @@ export function SiteNav() {
       </div>
 
       {open && (
-        <nav className="border-t border-white/5 px-5 py-4 md:hidden">
-          <ul className="flex flex-col gap-3">
+        <nav className="border-t border-white/5 px-6 py-4 md:hidden">
+          <ul className="flex flex-col gap-4">
             {links.map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className="block py-1 text-foreground/85">

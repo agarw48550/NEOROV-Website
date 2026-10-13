@@ -14,12 +14,12 @@ export default function SeeingTheUnseenPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#0f1729_75%)]" />
       </div>
 
-      <header className="px-5 pb-12 pt-32 md:px-10 md:pb-16">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs tracking-[0.28em] uppercase text-secondary">
+      <header className="page-hero pb-12 md:pb-16">
+        <div className="page-container mx-auto max-w-3xl text-center">
+          <p className="text-eyebrow">
             {seeingTheUnseen.category} · {seeingTheUnseen.date}
           </p>
-          <h1 className="mt-5 text-4xl leading-tight text-foreground md:text-6xl">
+          <h1 className="font-display text-display-lg mt-4 text-foreground">
             {seeingTheUnseen.title}
           </h1>
           <p className="mt-5 text-base text-foreground/65 md:text-lg">

@@ -22,12 +22,20 @@ export const metadata: Metadata = {
     template: "%s · Reef Monitoring ROV",
   },
   description:
-    "A custom pilot-operated ROV for shallow-water coastal monitoring — built by UWCSEA East students to document and protect coral reefs.",
+    "A custom pilot-operated ROV for shallow-water coastal monitoring, built by UWCSEA East students to document and protect coral reefs.",
   openGraph: {
     title: "Reef Monitoring ROV",
     description:
       "Low-cost underwater robotics for coral reef survey work in Singapore and the region.",
     type: "website",
+    locale: "en_SG",
+    siteName: "Reef Monitoring ROV",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Reef Monitoring ROV",
+    description:
+      "Shore-deployable underwater robotics for coral reef monitoring in Singapore.",
   },
 };
 

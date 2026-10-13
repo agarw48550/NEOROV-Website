@@ -6,8 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { RovFeatureCanvas } from "@/components/3d/DynamicCanvases";
 import { InlineVideo } from "@/components/media/InlineVideo";
 import { CursorGlow } from "@/components/motion/CursorGlow";
-import { MagneticLink } from "@/components/motion/MagneticLink";
-import { TiltMedia } from "@/components/motion/TiltMedia";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import {
   fieldRecord,
   rovFeatures,
@@ -66,8 +65,8 @@ export function RovPageClient() {
                     Reef Monitoring ROV
                   </h1>
                   <p className="mt-4 text-foreground/70">
-                    Scroll to inspect each system — frame, capsule, thrusters,
-                    stack, sensors, tether.
+                    Scroll to inspect each system: frame, capsule, thrusters,
+                    stack, sensors, and tether.
                   </p>
                 </div>
               </div>
@@ -83,7 +82,7 @@ export function RovPageClient() {
                 className="flex min-h-[85svh] items-center px-5 py-16 md:min-h-[95svh] md:px-10 md:py-20"
               >
                 <div className="mx-auto w-full max-w-6xl">
-                  <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
+                  <div>
                     <motion.div
                       initial={{ opacity: 0, y: 28 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -102,26 +101,6 @@ export function RovPageClient() {
                         {feature.body}
                       </p>
                     </motion.div>
-                    {feature.image && (
-                      <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ amount: 0.3 }}
-                        className="relative hidden aspect-[4/3] overflow-hidden lg:block"
-                      >
-                        <TiltMedia className="h-full w-full" maxTilt={7}>
-                          <div className="relative h-full w-full">
-                            <Image
-                              src={feature.image}
-                              alt={feature.title}
-                              fill
-                              className="object-cover"
-                              sizes="40vw"
-                            />
-                          </div>
-                        </TiltMedia>
-                      </motion.div>
-                    )}
                   </div>
                 </div>
               </section>
@@ -135,7 +114,7 @@ export function RovPageClient() {
               Field record
             </p>
             <h2 className="font-display mt-3 text-3xl text-foreground md:text-4xl">
-              Proven in the water
+              Proven in the Water
             </h2>
             <div className="mt-12 grid grid-cols-2 gap-8 sm:gap-10 md:grid-cols-3 lg:grid-cols-6">
               {fieldRecord.map((item, i) => (
@@ -164,7 +143,7 @@ export function RovPageClient() {
               Underway
             </p>
             <h2 className="font-display mt-3 text-3xl text-foreground md:text-4xl">
-              Field video
+              Field Video
             </h2>
             <div className="mt-10 grid gap-3 sm:grid-cols-2">
               {rovGalleryVideos.map((clip, i) => (
@@ -175,20 +154,18 @@ export function RovPageClient() {
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{ delay: i * 0.06 }}
                 >
-                  <TiltMedia className="overflow-hidden">
-                    <div className="relative aspect-video w-full bg-[#061018]">
-                      <InlineVideo
-                        src={clip.src}
-                        poster={clip.poster}
-                        className="absolute inset-0 h-full w-full object-cover"
-                      />
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#041018]/85 to-transparent px-3 pb-3 pt-8">
-                        <p className="text-[10px] tracking-[0.2em] uppercase text-secondary">
-                          {clip.label}
-                        </p>
-                      </div>
+                  <div className="card-media relative aspect-video w-full bg-[#061018]">
+                    <InlineVideo
+                      src={clip.src}
+                      poster={clip.poster}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#041018]/85 to-transparent px-3 pb-3 pt-8">
+                      <p className="text-[10px] tracking-[0.2em] uppercase text-secondary">
+                        {clip.label}
+                      </p>
                     </div>
-                  </TiltMedia>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -201,9 +178,9 @@ export function RovPageClient() {
               Gallery
             </p>
             <h2 className="font-display mt-3 text-3xl text-foreground md:text-4xl">
-              More of the vehicle
+              More of the Vehicle
             </h2>
-            <div className="mt-12 columns-1 gap-3 sm:columns-2 sm:gap-4 lg:columns-3">
+            <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {rovGallery.map((src, i) => (
                 <motion.div
                   key={src}
@@ -211,29 +188,22 @@ export function RovPageClient() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.15 }}
                   transition={{ duration: 0.5, delay: (i % 6) * 0.04 }}
-                  className="mb-3 break-inside-avoid sm:mb-4"
+                  className="card-media relative aspect-[4/3]"
                 >
-                  <TiltMedia className="overflow-hidden" maxTilt={6}>
-                    <div className="relative aspect-[4/3] w-full">
-                      <Image
-                        src={src}
-                        alt="ROV field photography"
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                    </div>
-                  </TiltMedia>
+                  <Image
+                    src={src}
+                    alt="ROV field photography"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
                 </motion.div>
               ))}
             </div>
             <div className="mt-14">
-              <MagneticLink
-                href="/"
-                className="border border-foreground/20 px-5 py-2.5 text-sm text-foreground/80 transition hover:border-secondary hover:text-secondary"
-              >
+              <ButtonLink href="/" variant="secondary">
                 ← Back to home
-              </MagneticLink>
+              </ButtonLink>
             </div>
           </div>
         </section>
