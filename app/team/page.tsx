@@ -1,131 +1,91 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import {
   acknowledgements,
   coreTeam,
-  mediaTeam,
   supervisors,
 } from "@/content/team";
 
 export default function TeamPage() {
   return (
     <div className="bg-background">
-      <section className="relative overflow-hidden px-5 pb-14 pt-32 md:px-10 depth-gradient">
-        <div className="pointer-events-none absolute inset-0 caustics opacity-45" />
-        <div className="relative mx-auto max-w-6xl">
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-xs tracking-[0.28em] uppercase text-secondary"
-          >
-            The crew
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="font-display mt-3 max-w-3xl text-4xl leading-tight text-foreground md:text-6xl"
-          >
-            Built for the water by the four.
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mt-5 max-w-xl text-foreground/65"
-          >
-            Engineering and ocean science — the core team behind Reef Monitoring
-            ROV, and everyone who kept the mission afloat.
-          </motion.p>
+      <section className="page-hero relative overflow-hidden depth-gradient">
+        <div className="pointer-events-none absolute inset-0 caustics opacity-25" />
+        <div className="page-container relative">
+          <SectionHeader
+            animateOnMount
+            titleAs="h1"
+            eyebrow="The crew"
+            title="Built by Youth for the Ocean"
+            description="Engineering and ocean science, from the core team behind Reef Monitoring ROV and everyone who supported field work."
+            titleClassName="max-w-3xl text-display-lg md:text-[clamp(2.25rem,5vw,3.75rem)]"
+          />
         </div>
       </section>
 
-      <section className="px-5 pb-20 md:px-10">
-        <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {coreTeam.map((member, i) => (
-            <motion.article
-              key={member.id}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.55, delay: i * 0.08 }}
-              className="group relative"
-              style={{ perspective: 900 }}
-            >
-              <div className="relative aspect-[3/4] overflow-hidden bg-[#0a1520] transition duration-500 group-hover:[transform:rotateY(-4deg)_rotateX(2deg)]">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  fill
-                  priority={i < 2}
-                  className="object-cover object-top transition duration-700 group-hover:scale-[1.04]"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#030d14] via-[#030d14]/20 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-4">
-                  <p className="text-[10px] tracking-[0.25em] uppercase text-secondary">
-                    {String(i + 1).padStart(2, "0")} · {member.role}
-                  </p>
-                  <h2 className="font-display mt-1 text-2xl text-foreground">
-                    {member.name}
-                  </h2>
-                  <p className="mt-1 text-xs text-foreground/55">{member.focus}</p>
+      <section className="pb-16 md:pb-24">
+        <div className="page-container">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {coreTeam.map((member, i) => (
+              <article
+                key={member.id}
+                className="group"
+              >
+                <div className="card-media relative aspect-[3/4] transition-[border-color] duration-300 group-hover:border-[color-mix(in_srgb,var(--secondary)_35%,transparent)]">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    priority={i < 2}
+                    className="object-cover object-top transition duration-500 group-hover:scale-[1.02]"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#030d14] via-[#030d14]/25 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-4">
+                    <p className="text-eyebrow text-[0.65rem] tracking-[0.18em]">
+                      {String(i + 1).padStart(2, "0")} · {member.role}
+                    </p>
+                    <h2 className="font-display text-h3 mt-2 text-foreground">
+                      {member.name}
+                    </h2>
+                    <p className="text-body-sm mt-1 text-foreground/55">{member.focus}</p>
+                  </div>
                 </div>
-              </div>
-              <p className="mt-4 text-sm leading-relaxed text-foreground/65">
-                {member.bio}
-              </p>
-            </motion.article>
-          ))}
+                <p className="text-body-sm mt-4 text-foreground/65">{member.bio}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="border-t border-white/5 px-5 py-24 md:px-10">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="font-display text-2xl text-foreground md:text-3xl">
-            Collaborators & support
+      <section className="section-y border-t border-white/5">
+        <div className="page-container">
+          <h2 className="font-display text-display-md text-foreground">
+            Collaborators & Support
           </h2>
-          <p className="mt-3 max-w-2xl text-sm text-foreground/60">
-            Mentors, media, families, and dive partners who made field work
-            possible.
+          <p className="text-body-sm mt-4 max-w-2xl text-foreground/60">
+            Mentors, families, and dive partners who made field work possible.
           </p>
 
           <div className="mt-12 grid gap-12 md:grid-cols-2">
             <div>
-              <h3 className="text-xs tracking-[0.22em] uppercase text-accent">
-                Guiding supervisors
-              </h3>
-              <ul className="mt-4 space-y-3">
+              <h3 className="text-eyebrow text-accent">Guiding Supervisors</h3>
+              <ul className="mt-4 space-y-4">
                 {supervisors.map((p) => (
-                  <li key={p.name} className="border-b border-white/5 pb-3">
+                  <li key={p.name} className="border-b border-white/5 pb-4">
                     <p className="text-foreground">{p.name}</p>
-                    <p className="text-sm text-foreground/50">{p.role}</p>
-                  </li>
-                ))}
-              </ul>
-              <h3 className="mt-10 text-xs tracking-[0.22em] uppercase text-accent">
-                Media
-              </h3>
-              <ul className="mt-4 space-y-3">
-                {mediaTeam.map((p) => (
-                  <li key={p.name} className="border-b border-white/5 pb-3">
-                    <p className="text-foreground">{p.name}</p>
-                    <p className="text-sm text-foreground/50">{p.role}</p>
+                    <p className="text-body-sm text-foreground/50">{p.role}</p>
                   </li>
                 ))}
               </ul>
             </div>
             <div>
-              <h3 className="text-xs tracking-[0.22em] uppercase text-accent">
-                Acknowledgements
-              </h3>
+              <h3 className="text-eyebrow text-accent">Acknowledgements</h3>
               <ul className="mt-4 columns-1 gap-x-8 sm:columns-2">
                 {acknowledgements.map((p) => (
-                  <li key={p.name} className="mb-3 break-inside-avoid">
-                    <p className="text-sm text-foreground">{p.name}</p>
-                    <p className="text-xs text-foreground/45">{p.role}</p>
+                  <li key={p.name} className="mb-4 break-inside-avoid">
+                    <p className="text-body-sm text-foreground">{p.name}</p>
+                    <p className="text-[0.75rem] text-foreground/45">{p.role}</p>
                   </li>
                 ))}
               </ul>

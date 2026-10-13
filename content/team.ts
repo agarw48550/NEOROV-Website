@@ -13,7 +13,7 @@ export const coreTeam: TeamMember[] = [
     name: "Shaurya Ambedkar",
     role: "Project Lead",
     focus: "Dive operations · Science liaison",
-    bio: "Fascinated by marine life since childhood, Shaurya leads the mission on the water — diving alongside the ROV, logging what the team sees, and connecting the build to researchers. He met Leo Tan years ago through NParks events, sparking passion for Singapore's reef ecology. Currently liaising with Prof Huang Danwei to further the project's impact across Singapore.",
+    bio: "Fascinated by marine life since childhood, Shaurya leads the mission on the water, diving alongside the ROV, logging what the team sees, and connecting the build to researchers. He met Leo Tan years ago through NParks events, sparking passion for Singapore's reef ecology. Currently liaising with Prof Huang Danwei to further the project's impact across Singapore.",
     image: "/images/team/shaurya-ambedkar.jpg",
   },
   {
@@ -37,7 +37,7 @@ export const coreTeam: TeamMember[] = [
     name: "Ayaan Agarwal",
     role: "Main Team",
     focus: "Systems · Site · Engineering",
-    bio: "Ayaan works across the engineering stack and the public face of the project — helping turn a competition build into a field research tool and shaping how the work is shared beyond the lab.",
+    bio: "Ayaan works across the engineering stack and the public face of the project, helping turn a competition build into a field research tool and shaping how the work is shared beyond the lab.",
     image: "/images/team/ayaan-agarwal.jpg",
   },
 ];
@@ -53,10 +53,6 @@ export const supervisors: Collaborator[] = [
   { name: "Matthew Weaver", role: "UWCSEA East Innovation Lab" },
 ];
 
-export const mediaTeam: Collaborator[] = [
-  { name: "Bhavya Satia", role: "Media Team" },
-];
-
 export const acknowledgements: Collaborator[] = [
   { name: "Shantanu Ambedkar", role: "Logistics · Chaperone · Procurement" },
   { name: "Priyadarshini Kini", role: "Finance" },
@@ -66,10 +62,10 @@ export const acknowledgements: Collaborator[] = [
   { name: "Sumit Jain", role: "Chaperone" },
   { name: "Sujata Jain", role: "Art rendition" },
   { name: "Jackson Sullivan", role: "Contracted operations assistant" },
-  { name: "Lester Kwok", role: "Orpheus Dive — Diving advisor" },
-  { name: "Coral Chua", role: "Orpheus Dive — Diving advisor" },
-  { name: "Jim Li", role: "Orpheus Dive — Pulau Hantu guide" },
-  { name: "Joseph Kuah", role: "Berjaya Dive Centre — Pulau Tioman" },
-  { name: "Nichole", role: "Dolphin Explorer — Pulau Hantu" },
-  { name: "Josh Chomiak", role: "UBC / UWCSEA Alumni — Procurement advisor" },
+  { name: "Lester Kwok", role: "Orpheus Dive, Diving Advisor" },
+  { name: "Coral Chua", role: "Orpheus Dive, Diving Advisor" },
+  { name: "Jim Li", role: "Orpheus Dive, Pulau Hantu Guide" },
+  { name: "Joseph Kuah", role: "Berjaya Dive Centre, Pulau Tioman" },
+  { name: "Nichole", role: "Dolphin Explorer, Pulau Hantu" },
+  { name: "Josh Chomiak", role: "UBC / UWCSEA Alumni, Procurement Advisor" },
 ];
